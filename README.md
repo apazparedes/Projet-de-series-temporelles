@@ -1,1 +1,1 @@
-#Projet de séries temporelles linéaires :
+Projet de séries temporelles linéaires :
