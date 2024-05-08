@@ -96,6 +96,9 @@ arima011 <- arima(xm3,c(0,1,1),include.mean=F)
 arima212
 arima011
 
+#test pour comparer
+arima012 <- arima(xm3,c(0,1,2),include.mean=F)
+
 Qtests(arima011$residuals,24,fitdf=3)
 
 all(Qtests(arima011$residuals, 24, fitdf=3)[,2]>0.05, na.rm=T) #vérifie que ttes pvals sont plus gdes 
@@ -116,6 +119,20 @@ dev.off()
 plot(arima011$residuals)
 axis(side=1)
 
+#test pour comparer
+arima012 <- arima(xm3,c(0,1,2),include.mean=F)
+
+arima111 <- arima(xm3,c(1,1,1),include.mean=F)
+
+all(Qtests(arima012$residuals, 24, fitdf=3)[,2]>0.05, na.rm=T)
+all(Qtests(arima111$residuals, 24, fitdf=3)[,2]>0.05, na.rm=T)
+adj_r2(arima012)
+adj_r2(arima111)
+
+plot(arima012$residuals)
+plot(arima111$residuals)
+#résidus très similaires
+
 
 #fonctions utilisées par théo : 
 
@@ -128,5 +145,7 @@ axis(side=1)
 
 
 fore=forecast(arima011, lead=2)
-
 plot(fore)
+
+plot(forecast(arima111, lead=2))
+plot(forecast(arima012, lead=2))
