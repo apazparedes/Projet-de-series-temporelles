@@ -6,7 +6,7 @@ library(aTSA)
 library(forecast)
 #Transformation du thé et du café
 
-fichier2<-"~/Projet-de-series-temporelles/Data/valeurs_mensuelles2.csv"
+fichier2<-"~/2A ENSAE/S2/série tempo linéaires/Projet-de-series-temporelles/Data/valeurs_mensuelles2.csv"
 data2 <- read.csv2(fichier2)
 zoo_data2 <- as.yearmon(data2$lib, "%Y-%m")
 xm2<- zoo(as.numeric(data2$indice), order.by = zoo_data2)
@@ -49,7 +49,7 @@ adfTest_valid <- function(series, kmax, adftype){
   return(adf)
 }
 
-adf <- adfTest_valid(xm,24,adftype="ct")
+adf <- adfTest_valid(xm2,24,adftype="ct")
 #
 Qtests(adf@test$lm$residuals, 24, fitdf = length(adf@test$lm$coefficients))
 #

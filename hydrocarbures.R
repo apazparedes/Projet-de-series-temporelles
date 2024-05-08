@@ -7,7 +7,7 @@ library(forecast)
 
 #Extraction d'hydrocarbures
 
-fichier<-"~/Projet-de-series-temporelles/Data/valeurs_mensuelles.csv"
+fichier<-"~/2A ENSAE/S2/série tempo linéaires/Projet-de-series-temporelles/Data/valeurs_mensuelles.csv"
 data <- read.csv2(fichier)
 zoo_data <- as.yearmon(data$lib, "%Y-%m")
 xm<- zoo(as.numeric(data$indice), order.by = zoo_data)

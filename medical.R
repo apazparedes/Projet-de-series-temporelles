@@ -5,12 +5,14 @@ library(lubridate)
 library(aTSA)
 library(forecast)
 
+
 #Fabrication d'instruments et de fournitures à usage médical et dentaire
 
-fichier3<-"~/Projet-de-series-temporelles/Data/valeurs_mensuelles3.csv"
+fichier3<-"~/2A ENSAE/S2/série tempo linéaires/Projet-de-series-temporelles/Data/valeurs_mensuelles3.csv"
 data3 <- read.csv2(fichier3)
 zoo_data3 <- as.yearmon(data3$lib, "%Y-%m")
 xm3<- zoo(as.numeric(data3$indice), order.by = zoo_data3)
+
 
 
 diff3<- diff(xm3,1)
@@ -56,7 +58,7 @@ Qtests(adf@test$lm$residuals, 24, fitdf = length(adf@test$lm$coefficients))
 #
 adf
 #
-summary(lm(diff2 ~ time(diff3)))
+summary(lm(diff3 ~ time(diff3)))
 #
 adf <- adfTest_valid(diff3,24,"nc")
 #
@@ -90,11 +92,13 @@ AICs==min(AICs)
 #
 BICs==min(BICs)
 #
-arima011 <- arima(xm,c(0,1,1),include.mean=F)
+arima011 <- arima(xm3,c(0,1,1),include.mean=F)
 arima212
 arima011
 
 Qtests(arima011$residuals,24,fitdf=3)
+
+all(Qtests(arima011$residuals, 24, fitdf=3)[,2]>0.05, na.rm=T) #vérifie que ttes pvals sont plus gdes 
 
 adj_r2 <- function(model){
   ss_res <- sum(model$residuals^2)
@@ -111,3 +115,18 @@ adj_r2(arima011)
 dev.off()
 plot(arima011$residuals)
 axis(side=1)
+
+
+#fonctions utilisées par théo : 
+
+#fonction astsa::sarima pour fit 
+#astsa::sarima.for pour prédire et attention au format c ts qu'il faut ! 
+
+
+
+#autres fonctions:
+
+
+fore=forecast(arima011, lead=2)
+
+plot(fore)
